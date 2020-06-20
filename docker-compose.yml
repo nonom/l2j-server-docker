@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  mariadb:
+    container_name: l2j-server-mariadb
+    image: yobasystems/alpine-mariadb:latest
+    volumes:
+      - /var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+  l2jserver:
+    container_name: l2j-server-docker
+    image: l2jserver/l2j-server-docker:latest
+    environment:
+      SERVER_IP: "127.0.0.1"
+      JAVA_XMS: "512m"
+      JAVA_XMX: "2g" 
+      RATE_XP: "1"
+      RATE_SP: "1"
+      RATE_ADENA: "1"
+      ADMIN_RIGHTS: "False"
+      FORCE_GEODATA: "True"
+      COORD_SYNC: "-1"
+      HELLBOUND_ACCESS: "False"
+      WEIGHT_LIMIT: "1"
+      RUN_SPEED_BOOST: "0"
+      TVT_ENABLED: "True"
+    depends_on:
+      - mariadb
+    ports:
+      - "7777:7777"
+      - "2106:2106"

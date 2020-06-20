@@ -1,0 +1,6 @@
+.git
+.gitignore
+.vscode
+.project
+docker-compose.yml
+!entry-point.sh
