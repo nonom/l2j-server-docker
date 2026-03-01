@@ -1,6 +1,6 @@
 services:
   l2j-login-server:
-    image: nonom/l2j-server-login:latest
+    image: nonom/l2j-server-login:dev
     depends_on:
       l2j-database:
         condition: service_healthy
@@ -24,7 +24,7 @@ services:
       - backend
 
   l2j-game-server:
-    image: nonom/l2j-server-game:latest
+    image: nonom/l2j-server-game:dev
     depends_on:
       l2j-database:
         condition: service_healthy
