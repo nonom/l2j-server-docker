@@ -9,14 +9,14 @@ services:
       - L2JLOGIN_DB_HOST=l2j-database
       - L2JLOGIN_DB_PORT=3306
       - L2JLOGIN_DB_NAME=l2jls
-      - L2JLOGIN_DB_USER=${DB_USER}
-      - L2JLOGIN_DB_PASS=${DB_PASS}
+      - L2JLOGIN_DB_USER=${DB_USER:-l2jls}
+      - L2JLOGIN_DB_PASS=${DB_PASS:-l2jls_password}
       - L2JLOGIN_DB_INSTALL_USER=root
-      - L2JLOGIN_DB_INSTALL_PASS=${MARIADB_ROOT_PASSWORD}
+      - L2JLOGIN_DB_INSTALL_PASS=${MARIADB_ROOT_PASSWORD:-root_password}
       - L2JLOGIN_server_GameServerHost=*
       - L2JLOGIN_database_URL=jdbc:mariadb://l2j-database:3306/l2jls
-      - L2JLOGIN_database_User=${DB_USER}
-      - L2JLOGIN_database_Password=${DB_PASS}
+      - L2JLOGIN_database_User=${DB_USER:-l2jls}
+      - L2JLOGIN_database_Password=${DB_PASS:-l2jls_password}
     ports:
       - 2106:2106
     networks:
@@ -33,15 +33,15 @@ services:
       - L2JGAME_DB_HOST=l2j-database
       - L2JGAME_DB_PORT=3306
       - L2JGAME_DB_NAME=l2jgs
-      - L2JGAME_DB_USER=${DB_USER}
-      - L2JGAME_DB_PASS=${DB_PASS}
+      - L2JGAME_DB_USER=${DB_USER:-l2jgs}
+      - L2JGAME_DB_PASS=${DB_PASS:-l2jgs_password}
       - L2JGAME_DB_INSTALL_USER=root
-      - L2JGAME_DB_INSTALL_PASS=${MARIADB_ROOT_PASSWORD}
+      - L2JGAME_DB_INSTALL_PASS=${MARIADB_ROOT_PASSWORD:-root_password}
       - L2JGAME_server_LoginHost=l2j-login-server
       - L2JGAME_server_LoginPort=9014
       - L2JGAME_database_URL=jdbc:mariadb://l2j-database:3306/l2jgs
-      - L2JGAME_database_User=${DB_USER}
-      - L2JGAME_database_Password=${DB_PASS}
+      - L2JGAME_database_User=${DB_USER:-l2jgs}
+      - L2JGAME_database_Password=${DB_PASS:-l2jgs_password}
     volumes:
       - ./data:/opt/l2j/data:rw
       - ./scripts:/opt/l2j/scripts:ro
@@ -56,7 +56,7 @@ services:
     volumes:
       - l2j-database-data:/var/lib/mysql:rw
     environment:
-      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-mariadb_root_password}
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-root_password}
       - MARIADB_ROOT_HOST=%
       - MARIADB_MYSQL_LOCALHOST_USER=1
     networks:
