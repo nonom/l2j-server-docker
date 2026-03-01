@@ -46,6 +46,9 @@ services:
       - L2JGAME_database_Password=${DB_PASS}
     env_file:
       - .env
+    volumes:
+      - ./data:/opt/l2j/data:rw
+      - ./scripts:/opt/l2j/scripts:ro
     ports:
       - 7777:7777
     networks:
