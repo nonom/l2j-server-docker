@@ -1,4 +1,4 @@
-.PHONY: up down logs ps restart
+.PHONY: up down logs ps restart custom
 
 ## Start the containers in detached mode
 up:
@@ -16,5 +16,6 @@ logs:
 ps:
 	docker compose ps
 
-## Restart containers
-restart: down up
+## Start containers with custom compose files.
+custom:
+	docker compose -f docker-compose.yml $$(find custom -mindepth 2 -maxdepth 2 -type f -name compose.yml -exec printf '-f %s ' {} \;) up -d

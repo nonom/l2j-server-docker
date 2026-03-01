@@ -1,0 +1,6 @@
+# Java arguments for L2J game server.
+
+services:
+  l2j-game-server:
+    env_file:
+      - custom/java/.env
