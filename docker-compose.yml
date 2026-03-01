@@ -17,8 +17,6 @@ services:
       - L2JLOGIN_database_URL=jdbc:mariadb://l2j-database:3306/l2jls
       - L2JLOGIN_database_User=${DB_USER}
       - L2JLOGIN_database_Password=${DB_PASS}
-    env_file:
-      - .env
     ports:
       - 2106:2106
     networks:
@@ -44,8 +42,6 @@ services:
       - L2JGAME_database_URL=jdbc:mariadb://l2j-database:3306/l2jgs
       - L2JGAME_database_User=${DB_USER}
       - L2JGAME_database_Password=${DB_PASS}
-    env_file:
-      - .env
     volumes:
       - ./data:/opt/l2j/data:rw
       - ./scripts:/opt/l2j/scripts:ro
@@ -60,10 +56,9 @@ services:
     volumes:
       - l2j-database-data:/var/lib/mysql:rw
     environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-mariadb_root_password}
       - MARIADB_ROOT_HOST=%
       - MARIADB_MYSQL_LOCALHOST_USER=1
-    env_file:
-      - .env
     networks:
       - backend
     healthcheck:
