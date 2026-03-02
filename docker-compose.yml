@@ -43,6 +43,7 @@ services:
       - L2JGAME_database_URL=jdbc:mariadb://l2j-database:3306/l2jgs
       - L2JGAME_database_User=${DB_USER:-l2jgs}
       - L2JGAME_database_Password=${DB_PASS:-l2jgs_password}
+      - L2JGAME_database_MaxConnections=${DB_MAX_CONNECTIONS:-50}
     volumes:
       - ./data:/opt/l2j/data:rw
       - ./scripts:/opt/l2j/scripts:ro
