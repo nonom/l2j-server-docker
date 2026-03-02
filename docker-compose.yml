@@ -25,6 +25,7 @@ services:
 
   l2j-game-server:
     image: nonom/l2j-server-game:dev
+    entrypoint: ["sh", "/opt/l2j/scripts/seed.sh"]
     depends_on:
       l2j-database:
         condition: service_healthy
