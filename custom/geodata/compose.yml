@@ -1,4 +1,4 @@
-# Geodata configuration for L2J game server.
+# Geodata configuration example for L2J game server.
 
 services:
   l2j-game-server:

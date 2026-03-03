@@ -1,4 +1,4 @@
-# Rates configuration for L2J Game Server.
+# Rates configuration example for L2J game server.
 
 services:
   l2j-game-server:
