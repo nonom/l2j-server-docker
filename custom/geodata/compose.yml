@@ -1,0 +1,9 @@
+# Geodata configuration for L2J game server.
+
+services:
+  l2j-game-server:
+    env_file:
+      - custom/geodata/.env
+    volumes:
+      - ./data/geodata:/opt/l2j/deploy/game/data/geodata:ro
+      - ./data/pathnode:/opt/l2j/deploy/game/data/pathnode:ro
