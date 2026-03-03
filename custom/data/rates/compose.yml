@@ -1,0 +1,6 @@
+# Rates configuration for L2J Game Server.
+
+services:
+  l2j-game-server:
+      env_file:
+        - custom/data/rates/.env
