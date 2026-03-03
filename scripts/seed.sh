@@ -40,9 +40,9 @@ if [ -n "${1:-}" ]; then
   exit 0
 fi
 
-seed_list "${L2J_FILES:-}"
+seed_list "${L2JFILES:-}"
 
-for key in $(env | sed -n 's/=.*//p' | grep '^L2J_FILES_' || true); do
+for key in $(env | sed -n 's/=.*//p' | grep '^L2JFILES_' || true); do
   value="$(printenv "$key")"
   seed_list "$value"
 done
