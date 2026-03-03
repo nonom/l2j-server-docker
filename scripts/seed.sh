@@ -1,15 +1,25 @@
 #!/bin/sh
 set -e
 
+SRC_ROOT="/opt/l2j/deploy/game/data"
+DST_ROOT="/opt/l2j/data"
+
 seed() {
   file="$1"
   [ -n "$file" ] || return 0
 
-  src="/opt/l2j/deploy/game/data/$file"
-  dst="/opt/l2j/data/$file"
+  matches="$(find "$SRC_ROOT" -type f -path "$SRC_ROOT/$file")"
+  if [ -z "$matches" ]; then
+    echo "ERROR: '$file' did not match any files under '$SRC_ROOT'" >&2
+    return 1
+  fi
 
-  mkdir -p "$(dirname "$dst")"
-  [ -f "$dst" ] || cp "$src" "$dst"
+  printf '%s\n' "$matches" | while IFS= read -r src; do
+    rel="${src#$SRC_ROOT/}"
+    dst="$DST_ROOT/$rel"
+    mkdir -p "$(dirname "$dst")"
+    [ -f "$dst" ] || cp "$src" "$dst"
+  done
 }
 
 seed_list() {
