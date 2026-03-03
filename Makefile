@@ -24,6 +24,7 @@ recreate:
 
 ## Restart all containers
 restart: down up
+	docker compose logs -f
 
 ## Start containers with custom compose files.
 custom:
