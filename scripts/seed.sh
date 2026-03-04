@@ -47,4 +47,6 @@ for key in $(env | sed -n 's/=.*//p' | grep '^L2JFILES_' || true); do
   seed_list "$value"
 done
 
+chmod -R a+rwX "$DST_ROOT" 2>/dev/null || true
+
 exec /entrypoint.sh
