@@ -67,7 +67,7 @@ echo Usage: %~n0 ^<up^|down^|logs^|ps^|recreate^|restart^|custom^> [docker compo
 echo.
 echo Examples:
 echo   %~n0 up
-echo   %~n0 logs l2j-game-server
+echo   %~n0 logs l2j-server-game
 echo   %~n0 recreate --pull always
 echo   %~n0 custom
 exit /b 1
