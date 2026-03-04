@@ -1,5 +1,5 @@
 services:
-  l2j-login-server:
+  l2j-server-login:
     image: nonom/l2j-server-login:latest
     depends_on:
       l2j-database:
@@ -23,7 +23,7 @@ services:
       - default
       - backend
 
-  l2j-game-server:
+  l2j-server-game:
     image: nonom/l2j-server-game:latest
     entrypoint: ["sh", "/opt/l2j/scripts/seed.sh"]
     depends_on:
@@ -38,7 +38,7 @@ services:
       - L2JGAME_DB_PASS=${L2JGAME_DB_PASS:-l2jgs_password}
       - L2JGAME_DB_INSTALL_USER=root
       - L2JGAME_DB_INSTALL_PASS=${MARIADB_ROOT_PASSWORD:-root_password}
-      - L2JGAME_server_LoginHost=l2j-login-server
+      - L2JGAME_server_LoginHost=l2j-server-login
       - L2JGAME_server_LoginPort=9014
       - L2JGAME_database_URL=jdbc:mariadb://l2j-database:3306/${L2JGAME_DB_NAME:-l2jgs}
       - L2JGAME_database_User=${L2JGAME_DB_USER:-l2jgs}

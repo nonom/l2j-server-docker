@@ -1,7 +1,7 @@
 # Service Buffer configuration example for L2J game server.
 
 services:
-  l2j-game-server:
+  l2j-server-game:
     environment:
       - L2JFILES_SERVICE_BUFFER=service/buffer/json/global.json,service/buffer/json/voiced.json
     env_file:
