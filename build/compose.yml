@@ -1,0 +1,14 @@
+# Build local L2J server images from sibling repositories.
+
+services:
+  l2j-login-server:
+    build:
+      context: ../l2j-server-login-docker
+      dockerfile: Dockerfile
+    image: l2j-server-login:local
+
+  l2j-game-server:
+    build:
+      context: ../l2j-server-game-docker
+      dockerfile: Dockerfile
+    image: l2j-server-game:local
