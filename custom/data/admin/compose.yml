@@ -1,0 +1,6 @@
+# Administrator configuration example for L2J game server.
+
+services:
+  l2j-game-server:
+    env_file:
+      - custom/data/admin/.env
