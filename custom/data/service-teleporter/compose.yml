@@ -1,0 +1,8 @@
+# Service Teleporter configuration example for L2J game server.
+
+services:
+  l2j-game-server:
+    environment:
+      - L2JFILES_SERVICE_TELEPORTER=service/teleporter/json/global.json,service/teleporter/json/voiced.json
+    env_file:
+      - custom/data/service-teleporter/.env
