@@ -21,5 +21,5 @@ while IFS= read -r f; do
   [ -f "$f" ] || continue
   echo "Applying: $f"
   docker compose exec -T l2j-database \
-    mariadb -u"${DB_USER:-l2jgs}" -p"${DB_PASS:-l2jgs_password}" "${L2JGAME_DB_NAME:-l2jgs}" < "$f"
+    mariadb -u"${L2JGAME_DB_USER:-l2jgs}" -p"${L2JGAME_DB_PASS:-l2jgs_password}" "${L2JGAME_DB_NAME:-l2jgs}" < "$f"
 done < "$tmp_files"
