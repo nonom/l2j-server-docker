@@ -3,4 +3,4 @@
 services:
   l2j-server-game:
     env_file:
-      - server/data/admin/.env
+      - server/admin/.env
