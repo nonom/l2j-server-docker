@@ -1,4 +1,4 @@
-﻿# l2j-server-easy-stack
+﻿# l2j-server-docker
 
 ## Quick start
 
