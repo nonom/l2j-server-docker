@@ -1,22 +1,22 @@
 #!/bin/sh
 set -e
 
-SRC_ROOT="/opt/l2j/deploy/game/data"
-DST_ROOT="/opt/l2j/data"
+SEED_SRC=/opt/l2j/deploy/game/data
+SEED_DEST="${DATA_MOUNT:-/opt/l2j/data}"
 
 seed() {
   file="$1"
   [ -n "$file" ] || return 0
 
-  matches="$(find "$SRC_ROOT" -type f -path "$SRC_ROOT/$file")"
+  matches="$(find "$SEED_SRC" -type f -path "$SEED_SRC/$file")"
   if [ -z "$matches" ]; then
-    echo "ERROR: '$file' did not match any files under '$SRC_ROOT'" >&2
+    echo "ERROR: '$file' did not match any files under '$SEED_SRC'" >&2
     return 1
   fi
 
   printf '%s\n' "$matches" | while IFS= read -r src; do
-    rel="${src#$SRC_ROOT/}"
-    dst="$DST_ROOT/$rel"
+    rel="${src#$SEED_SRC/}"
+    dst="$SEED_DEST/$rel"
     mkdir -p "$(dirname "$dst")"
     [ -f "$dst" ] || cp "$src" "$dst"
   done
@@ -47,4 +47,4 @@ for key in $(env | sed -n 's/=.*//p' | grep '^L2JFILES_' || true); do
   seed_list "$value"
 done
 
-chmod -R a+rwX "$DST_ROOT" 2>/dev/null || true
+chmod -R a+rwX "$SEED_DEST" 2>/dev/null || true
