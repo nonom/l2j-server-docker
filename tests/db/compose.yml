@@ -1,0 +1,15 @@
+services:
+  test-db:
+    image: ${MARIADB_IMAGE:-mariadb:11.8}
+    command: >
+      mariadb
+        --host=l2j-database
+        --port=3306
+        --user=${L2JGAME_DB_USER:-l2jgs}
+        --password=${L2JGAME_DB_PASS:-l2jgs_password}
+        --execute="SELECT 1;"
+    depends_on:
+      l2j-database:
+        condition: service_healthy
+    networks:
+      - backend

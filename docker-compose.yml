@@ -54,7 +54,7 @@ services:
       - backend
 
   l2j-database:
-    image: mariadb:11.8
+    image: ${MARIADB_IMAGE:-mariadb:11.8}
     volumes:
       - l2j-database-data:/var/lib/mysql:rw
     environment:

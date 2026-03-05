@@ -1,4 +1,4 @@
-.PHONY: up down logs ps recreate restart server
+.PHONY: up down logs ps recreate restart server test
 
 ## Start the containers in detached mode
 up:
@@ -25,6 +25,12 @@ recreate:
 ## Restart all containers
 restart: down up
 	docker compose logs -f
+
+## Run tests against the running stack.
+test:
+	docker compose -f docker-compose.yml -f tests/db/compose.yml run --rm test-db
+	docker compose -f docker-compose.yml -f tests/login/compose.yml run --rm test-login
+	docker compose -f docker-compose.yml -f tests/game/compose.yml run --rm test-game
 
 ## Start containers with server compose files.
 server:

@@ -1,0 +1,7 @@
+services:
+  test-game:
+    image: ${ALPINE_IMAGE:-alpine:3.23}
+    command: >
+      sh -c "nc -z l2j-server-game 7777 && echo 'Game port 7777 OK' || (echo 'Game port 7777 FAILED' && exit 1)"
+    networks:
+      - default

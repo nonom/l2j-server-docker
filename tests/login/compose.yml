@@ -1,0 +1,7 @@
+services:
+  test-login:
+    image: ${ALPINE_IMAGE:-alpine:3.23}
+    command: >
+      sh -c "nc -z l2j-server-login 2106 && echo 'Login port 2106 OK' || (echo 'Login port 2106 FAILED' && exit 1)"
+    networks:
+      - default
