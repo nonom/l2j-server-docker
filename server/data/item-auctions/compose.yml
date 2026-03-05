@@ -1,6 +1,0 @@
-# Item Auctions configuration example for L2J game server.
-
-services:
-  l2j-server-game:
-    environment:
-      - L2JFILES_ITEM_AUCTIONS=ItemAuctions.xml
