@@ -44,6 +44,15 @@ if /I "%cmd%"=="restart" (
   goto :eof
 )
 
+if /I "%cmd%"=="test" (
+  docker compose -f docker-compose.yml -f tests/db/compose.yml run --rm test-db %*
+  if errorlevel 1 goto :eof
+  docker compose -f docker-compose.yml -f tests/login/compose.yml run --rm test-login %*
+  if errorlevel 1 goto :eof
+  docker compose -f docker-compose.yml -f tests/game/compose.yml run --rm test-game %*
+  goto :eof
+)
+
 if /I "%cmd%"=="server" goto :server
 
 echo Unknown command: %cmd%
@@ -63,11 +72,11 @@ docker compose !compose_files! logs -f
 goto :eof
 
 :help
-echo Usage: %~n0 ^<up^|down^|logs^|ps^|recreate^|restart^|server^> [docker compose args]
+echo Usage: %~n0 ^<up^|down^|logs^|ps^|recreate^|restart^|test^|server^> [docker compose args]
 echo.
-echo Examples:
-echo   %~n0 up
-echo   %~n0 logs
-echo   %~n0 recreate
+echo Example:
 echo   %~n0 server
+echo   %~n0 test
+echo   %~n0 logs
+echo   %~n0 down
 exit /b 1

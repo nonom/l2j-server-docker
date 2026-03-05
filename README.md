@@ -5,23 +5,17 @@
 Make commands:
 
 ```bash
-make up
-make down
-make logs
-make ps
-make recreate
-make restart
 make server
+make test
+make logs
+make down
 ```
 
 Windows commands:
 
 ```bat
-compose up
-compose down
-compose logs
-compose ps
-compose recreate
-compose restart
 compose server
+compose test
+compose logs
+compose down
 ```
