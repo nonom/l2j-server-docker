@@ -11,7 +11,7 @@ make logs
 make ps
 make recreate
 make restart
-make custom
+make server
 ```
 
 Windows commands:
@@ -23,5 +23,5 @@ compose logs
 compose ps
 compose recreate
 compose restart
-compose custom
+compose server
 ```

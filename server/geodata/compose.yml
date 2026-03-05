@@ -3,7 +3,7 @@
 services:
   l2j-server-game:
     env_file:
-      - custom/geodata/.env
+      - server/geodata/.env
     volumes:
       - ./${DATA_DIR:-data}/geodata:/opt/l2j/deploy/game/data/geodata:ro
       - ./${DATA_DIR:-data}/pathnode:/opt/l2j/deploy/game/data/pathnode:ro

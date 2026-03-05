@@ -44,15 +44,15 @@ if /I "%cmd%"=="restart" (
   goto :eof
 )
 
-if /I "%cmd%"=="custom" goto :custom
+if /I "%cmd%"=="server" goto :server
 
 echo Unknown command: %cmd%
 echo.
 goto :help
 
-:custom
+:server
 set "compose_files=-f docker-compose.yml"
-for /f "delims=" %%F in ('where /r custom compose.yml 2^>nul ^| sort') do (
+for /f "delims=" %%F in ('where /r server compose.yml 2^>nul ^| sort') do (
   set "compose_files=!compose_files! -f ""%%~fF"""
 )
 
@@ -63,11 +63,11 @@ docker compose !compose_files! logs -f
 goto :eof
 
 :help
-echo Usage: %~n0 ^<up^|down^|logs^|ps^|recreate^|restart^|custom^> [docker compose args]
+echo Usage: %~n0 ^<up^|down^|logs^|ps^|recreate^|restart^|server^> [docker compose args]
 echo.
 echo Examples:
 echo   %~n0 up
-echo   %~n0 logs l2j-server-game
-echo   %~n0 recreate --pull always
-echo   %~n0 custom
+echo   %~n0 logs
+echo   %~n0 recreate
+echo   %~n0 server
 exit /b 1
