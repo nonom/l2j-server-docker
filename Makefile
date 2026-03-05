@@ -1,4 +1,4 @@
-.PHONY: up down logs ps recreate restart custom
+.PHONY: up down logs ps recreate restart server
 
 ## Start the containers in detached mode
 up:
@@ -26,7 +26,7 @@ recreate:
 restart: down up
 	docker compose logs -f
 
-## Start containers with custom compose files.
-custom:
-	docker compose -f docker-compose.yml $$(find custom -type f -name compose.yml | sort | sed 's|^|-f |') up -d
+## Start containers with server compose files.
+server:
+	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') up -d
 	docker compose logs -f
