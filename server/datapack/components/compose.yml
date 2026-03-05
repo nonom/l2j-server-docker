@@ -3,4 +3,4 @@
 services:
   l2j-server-game:
     env_file:
-      - server/data/components/.env
+      - server/datapack/components/.env
