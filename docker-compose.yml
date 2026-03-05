@@ -45,7 +45,7 @@ services:
       - L2JGAME_database_Password=${L2JGAME_DB_PASS:-l2jgs_password}
       - L2JGAME_database_MaxConnections=${DB_MAX_CONNECTIONS:-50}
     volumes:
-      - ./data:/opt/l2j/data:rw
+      - ./${DATA_DIR:-data}:${DATA_MOUNT:-/opt/l2j/data}:rw
       - ./scripts:/opt/l2j/scripts:ro
     ports:
       - 7777:7777
