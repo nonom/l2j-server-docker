@@ -1,44 +1,45 @@
-.PHONY: up down logs ps build recreate rebuild restart test
+.PHONY: up down logs ps recreate build rebuild restart test
+
+compose := docker compose -f docker-compose.yml $(shell find server -type f -name compose.yml | sort | sed 's|^|-f |')
 
 ## Start the containers in detached mode
 up:
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') up -d
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') logs -f
+	@$(compose) up -d
+	@$(compose) logs -f
 
 ## Stop and remove containers
 down:
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') down --remove-orphans
+	@$(compose) down --remove-orphans
 
 ## Show logs from all containers
 logs:
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') logs -f
+	@$(compose) logs -f
 
 ## Show running containers and their status
 ps:
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') ps
+	@$(compose) ps
+
+## Recreate containers.
+recreate: down
+	@$(compose) up -d --force-recreate
+	@$(compose) logs -f
 
 ## Build local images.
 build:
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') build
-
-## Recreate containers.
-recreate:
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') down
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') up -d --force-recreate
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') logs -f
+	$(compose) build
 
 ## Rebuild local images and recreate containers.
 rebuild:
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') build
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') up -d --force-recreate
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') logs -f
+	@$(compose) build
+	@$(compose) up -d --force-recreate
+	@$(compose) logs -f
 
 ## Restart all containers
 restart: down up
-	docker compose -f docker-compose.yml $$(find server -type f -name compose.yml | sort | sed 's|^|-f |') logs -f
+	@$(compose) logs -f
 
 ## Run tests against the running stack.
 test:
 	for f in $$(find tests -type f -name compose.yml | sort); do \
-		docker compose -f docker-compose.yml -f $$f run --rm test || exit 1; \
+		@docker compose -f docker-compose.yml -f $$f run --rm test || exit 1; \
 	done
