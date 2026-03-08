@@ -24,6 +24,7 @@ For Linux users running Docker, install and run `make`.
 
 ```bash
 make up
+make logs
 make down
 ```
 
@@ -31,6 +32,7 @@ For Windows users running Docker Desktop, use `compose` bat.
 
 ```bat
 compose up
+compose logs
 compose down
 ```
 
