@@ -29,10 +29,8 @@ build:
 	$(compose) build
 
 ## Rebuild local images and recreate containers.
-rebuild:
-	@$(compose) build
+rebuild: build
 	@$(compose) up -d --force-recreate
-	@$(compose) logs -f
 
 ## Restart all containers
 restart: down up
@@ -40,6 +38,6 @@ restart: down up
 
 ## Run tests against the running stack.
 test:
-	for f in $$(find tests -type f -name compose.yml | sort); do \
-		@docker compose -f docker-compose.yml -f $$f run --rm test || exit 1; \
-	done
+	@$(compose) -f tests/db/compose.yml run --rm test-db
+	@$(compose) -f tests/login/compose.yml run --rm test-login
+	@$(compose) -f tests/game/compose.yml run --rm test-game
