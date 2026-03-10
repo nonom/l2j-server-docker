@@ -27,12 +27,14 @@ seed_list() {
   [ -n "$list" ] || return 0
 
   ifs="$IFS"
+  set -f
   IFS=",;"
   for raw in $list; do
     file="$(echo "$raw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
     seed "$file"
   done
   IFS="$ifs"
+  set +f
 }
 
 if [ -n "${1:-}" ]; then

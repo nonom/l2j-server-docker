@@ -34,9 +34,13 @@ compare_file() {
     CONFLICTS=$((CONFLICTS + 1))
     echo "WARNING: override differs for '$rel'" >&2
 
-    if [ "$COMPARE_VERBOSE" = "1" ]; then
-      echo "  upstream: $(sha256sum "$src" | awk '{print $1}')" >&2
-      echo "  local   : $(sha256sum "$dst" | awk '{print $1}')" >&2
+  if [ "$COMPARE_VERBOSE" = "1" ]; then
+      if command -v sha256sum >/dev/null 2>&1; then
+        echo "  upstream: $(sha256sum "$src" | awk '{print $1}')" >&2
+        echo "  local   : $(sha256sum "$dst" | awk '{print $1}')" >&2
+      else
+        echo "  sha256sum not available" >&2
+      fi
 
       if command -v diff >/dev/null 2>&1; then
         diff -u "$src" "$dst" 2>/dev/null | sed -n '1,40p' >&2 || true
@@ -73,4 +77,4 @@ else
   done
 fi
 
-echo "Comparision result: $COMPARED files ($CONFLICTS conflicts)." >&2
+echo "Comparison result: $COMPARED files ($CONFLICTS conflicts)." >&2
