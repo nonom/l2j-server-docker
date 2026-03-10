@@ -4,11 +4,41 @@ set -e
 COMPARE_SRC="/opt/l2j/deploy/game/data"
 COMPARE_DST="${DATA_MOUNT:-/opt/l2j/data}"
 COMPARE_VERBOSE="${COMPARE_VERBOSE:-0}"
+MANIFEST="$COMPARE_DST/.seed/manifest.tsv"
 
 CONFLICTS=0
 COMPARED=0
 
 echo "Comparing L2JFILES." >&2
+
+compare_hash_file() {
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$1" | awk '{print $1}'
+    return 0
+  fi
+  if command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$1" | awk '{print $1}'
+    return 0
+  fi
+  echo ""
+}
+
+compare_manifest_lookup() {
+  awk -F '\t' -v p="$1" '$2==p {print $1; exit}' "$MANIFEST"
+}
+
+compare_manifest_build() {
+  mkdir -p "$(dirname "$MANIFEST")"
+  : > "$MANIFEST"
+
+  find "$COMPARE_SRC" -type f | while IFS= read -r src; do
+    [ -n "$src" ] || continue
+    rel="${src#$COMPARE_SRC/}"
+    hash="$(compare_hash_file "$src")"
+    [ -n "$hash" ] || continue
+    printf '%s\t%s\n' "$hash" "$rel" >> "$MANIFEST"
+  done
+}
 
 compare_file() {
   file="$1"
@@ -30,6 +60,14 @@ compare_file() {
 
     COMPARED=$((COMPARED + 1))
     cmp -s "$src" "$dst" && continue
+
+    manifest_hash="$(compare_manifest_lookup "$rel")"
+    if [ -n "$manifest_hash" ]; then
+      current_hash="$(compare_hash_file "$dst")"
+      if [ -n "$current_hash" ] && [ "$current_hash" = "$manifest_hash" ]; then
+        continue
+      fi
+    fi
 
     CONFLICTS=$((CONFLICTS + 1))
     echo "WARNING: override differs for '$rel'" >&2
@@ -65,6 +103,10 @@ compare_list() {
   IFS="$ifs"
   set +f
 }
+
+if [ ! -s "$MANIFEST" ]; then
+  compare_manifest_build
+fi
 
 if [ -n "${1:-}" ]; then
   compare_file "$1"
