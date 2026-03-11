@@ -1,11 +1,11 @@
 .PHONY: up down logs ps recreate build rebuild restart test
 
 compose := docker compose -f docker-compose.yml $(shell find server -type f -name compose.yml | sort | sed 's|^|-f |')
+compose_build := docker compose -f docker-compose.yml $(shell find server build -type f -name compose.yml | sort | sed 's|^|-f |')
 
 ## Start the containers in detached mode
 up:
 	@$(compose) up -d
-	@$(compose) logs -f
 
 ## Stop and remove containers
 down:
@@ -22,19 +22,18 @@ ps:
 ## Recreate containers.
 recreate: down
 	@$(compose) up -d --force-recreate
-	@$(compose) logs -f
 
 ## Build local images.
 build:
-	$(compose) build
+	@$(compose_build) build
 
 ## Rebuild local images and recreate containers.
-rebuild: build
+rebuild:
+	@$(compose_build) build --no-cache
 	@$(compose) up -d --force-recreate
 
 ## Restart all containers
 restart: down up
-	@$(compose) logs -f
 
 ## Run tests against the running stack.
 test:
