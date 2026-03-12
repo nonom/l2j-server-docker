@@ -1,2 +1,4 @@
 /.env
 /data*/
+server/custom/*
+!server/custom/.gitkeep
