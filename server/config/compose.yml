@@ -1,0 +1,17 @@
+# Use your own ipconfig.xml and hexid.txt from your data folder.
+#
+# If data/ipconfig.xml exists, this overlay uses that file. If it does not exist, L2J keeps automatic network configuration.
+# If data/hexid.txt does not exist, this overlay creates an empty file first, to preserve the serverId for the next restart.
+#
+# Note: ipconfig.xml and hexid.txt do not behave the same way.
+
+services:
+  l2j-server-game:
+    entrypoint: >
+      sh -lc '
+      [ -f ${DATA_MOUNT:-/opt/l2j/data}/ipconfig.xml ] &&
+      ln -sf ${DATA_MOUNT:-/opt/l2j/data}/ipconfig.xml /opt/l2j/deploy/game/config/ipconfig.xml;
+      [ -f ${DATA_MOUNT:-/opt/l2j/data}/hexid.txt ] || : > ${DATA_MOUNT:-/opt/l2j/data}/hexid.txt;
+      ln -sf ${DATA_MOUNT:-/opt/l2j/data}/hexid.txt /opt/l2j/custom/game/config/hexid.txt;
+      exec sh /opt/l2j/scripts/entrypoint.sh
+      '

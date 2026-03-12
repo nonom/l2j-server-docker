@@ -1,0 +1,6 @@
+<!-- Example file to override game server network mapping, recommended for WSL -->
+<?xml version="1.0" encoding="UTF-8"?>
+<gameserver address="127.0.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ipconfig.xsd">
+	<define subnet="127.0.0.0/8" address="127.0.0.1" />
+	<define subnet="0.0.0.0/0" address="127.0.0.1" />
+</gameserver>
