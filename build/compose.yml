@@ -11,8 +11,7 @@ services:
     build:
       context: ../l2j-server-game-docker
       dockerfile: ../l2j-server-docker/build/Dockerfile.game
-      #additional_contexts:
-      #  local-game: ../l2j-server-game
-      #  local-datapack: ../l2j-server-datapack
+      additional_contexts:
+        #local-game: ../l2j-server-game
+        local-datapack: ../l2j-server-datapack
     image: l2j-server-game:local
-
