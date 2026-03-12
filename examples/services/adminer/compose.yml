@@ -1,0 +1,21 @@
+# Lightweight web UI for MariaDB administration.
+# Connects to the L2J database and exposes a browser interface on port 8081.
+#
+# SECURITY CAUTION:
+# Keep this service enabled ONLY while you need it for admin tasks.
+# Use this command to stop the Adminer service when you are done:
+# docker compose stop adminer
+
+services:
+  adminer:
+    image: ${ADMINER_IMAGE:-adminer:latest}
+    depends_on:
+      l2j-database:
+        condition: service_healthy
+    environment:
+      - ADMINER_DEFAULT_SERVER=l2j-database
+    ports:
+      - ${ADMINER_PORT:-8081}:8080
+    networks:
+      - default
+      - backend

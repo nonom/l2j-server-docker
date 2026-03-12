@@ -5,4 +5,4 @@ services:
     environment:
       - L2JFILES_SERVICE_TELEPORTER=service/teleporter/json/global.json,service/teleporter/json/voiced.json
     env_file:
-      - server/datapack/service-teleporter/.env
+      - server/custom/service-teleporter/.env

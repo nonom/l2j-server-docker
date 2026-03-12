@@ -5,4 +5,4 @@ services:
     environment:
       - L2JFILES_SERVICE_BUFFER=service/buffer/json/global.json,service/buffer/json/voiced.json
     env_file:
-      - server/datapack/service-buffer/.env
+      - server/custom/service-buffer/.env
