@@ -46,7 +46,9 @@ ENV L2J_HOME="$L2J_DIR"
 
 WORKDIR "$L2J_DEPLOY_DIR"
 
-COPY --from=build "$L2J_SOURCE_DIR/$L2JCLI_DIR/target/*.zip" "$L2J_SOURCE_DIR/$L2JGAME_DIR/target/*.zip" "$L2J_SOURCE_DIR/$L2JDP_DIR/target/*.zip" "$L2J_DEPLOY_DIR/"
+COPY --from=build "$L2J_SOURCE_DIR/$L2JCLI_DIR/target/*.zip"  "$L2J_DEPLOY_DIR/"
+COPY --from=build "$L2J_SOURCE_DIR/$L2JGAME_DIR/target/*.zip"  "$L2J_DEPLOY_DIR/"
+COPY --from=build "$L2J_SOURCE_DIR/$L2JDP_DIR/target/*.zip"  "$L2J_DEPLOY_DIR/"
 RUN \
   apk update && apk --no-cache add unzip openjdk25-jre mariadb-client && \
   mkdir -p "$L2J_CUSTOM_DIR/game/config" "$L2J_DEPLOY_DIR/$L2JCLI_DIR/logs" "$L2J_DEPLOY_DIR/$L2JGAME_DIR/logs" && \
