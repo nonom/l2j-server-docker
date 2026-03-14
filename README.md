@@ -46,7 +46,7 @@ The `.env.example` file is included for that purpose. Copy this file if you want
 
 ## Customization
 
-A data folder is created and initialized based on the server compose files environment configuration, this is an experimental feature. Some examples are provided in the `server/` folder to show how to retrieve and customize your data files.
+A data folder is created and initialized based on the server compose files environment configuration, this is an experimental feature. Some examples are provided in the `examples/` folder to show how to retrieve and customize your data files.
 
 The `data/` folder is created in your directory, so you can safely store your customizations.
 
