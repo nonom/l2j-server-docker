@@ -1,6 +1,6 @@
 services:
   l2j-server-login:
-    image: nonom/l2j-server-login:latest
+    image: ${L2JLOGIN_IMAGE:-nonom/l2j-server-login:latest}
     depends_on:
       l2j-database:
         condition: service_healthy
@@ -18,7 +18,7 @@ services:
       - backend
 
   l2j-server-game:
-    image: nonom/l2j-server-game:latest
+    image: ${L2JGAME_IMAGE:-nonom/l2j-server-game:latest}
     entrypoint: ["sh", "/opt/l2j/scripts/entrypoint.sh"]
     depends_on:
       l2j-database:
