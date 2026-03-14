@@ -31,9 +31,9 @@ make down
 For Windows users running Docker Desktop, use `compose` bat.
 
 ```bat
-compose up
-compose logs
-compose down
+.\compose up
+.\compose logs
+.\compose down
 ```
 
 Use `make` or `compose` to start and stop the full stack.
