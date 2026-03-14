@@ -1,0 +1,23 @@
+services:
+  l2j-server-login:
+    environment:
+      - L2JLOGIN_server_GameServerHost=*
+      - L2JLOGIN_database_URL=jdbc:mariadb://l2j-database:3306/${L2JLOGIN_DB_NAME:-l2jls}
+      - L2JLOGIN_database_User=${L2JLOGIN_DB_USER:-l2jls}
+      - L2JLOGIN_database_Password=${L2JLOGIN_DB_PASS:-l2jls_password}
+  
+  l2j-server-game:
+    environment:
+      - L2JGAME_server_LoginHost=l2j-server-login
+      - L2JGAME_database_URL=jdbc:mariadb://l2j-database:3306/${L2JGAME_DB_NAME:-l2jgs}
+      - L2JGAME_database_User=${L2JGAME_DB_USER:-l2jgs}
+      - L2JGAME_database_Password=${L2JGAME_DB_PASS:-l2jgs_password}
+      - L2JGAME_database_MaxConnections=${DB_MAX_CONNECTIONS:-50}
+    entrypoint: >
+      sh -lc '
+      [ -f ${DATA_MOUNT:-/opt/l2j/data}/ipconfig.xml ] &&
+      ln -sf ${DATA_MOUNT:-/opt/l2j/data}/ipconfig.xml /opt/l2j/deploy/game/config/ipconfig.xml;
+      [ -f ${DATA_MOUNT:-/opt/l2j/data}/hexid.txt ] || : > ${DATA_MOUNT:-/opt/l2j/data}/hexid.txt;
+      ln -sf ${DATA_MOUNT:-/opt/l2j/data}/hexid.txt /opt/l2j/custom/game/config/hexid.txt;
+      exec sh /opt/l2j/scripts/entrypoint.sh
+      '
