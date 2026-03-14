@@ -3,10 +3,10 @@
 services:
   l2j-server-login:
     volumes:
-      - ./${L2JLOGIN_LOGS_DIR:-data/logs/login}:/opt/l2j/deploy/login/logs:rw
+      - ./${DATA_DIR:-data}/logs/login:/opt/l2j/deploy/login/logs:rw
 
   l2j-server-game:
     env_file:
       - server/logs/.env
     volumes:
-      - ./${L2JGAME_LOGS_DIR:-data/logs/game}:/opt/l2j/deploy/game/logs:rw
+      - ./${DATA_DIR:-data}/logs/game:/opt/l2j/deploy/game/logs:rw

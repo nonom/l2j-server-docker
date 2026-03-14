@@ -1,0 +1,26 @@
+# Scheduled MariaDB backup using cron.
+# Dumps all databases daily at 3am with gzip compression, rotating up to 14 backups.
+# Uses --single-transaction for non-locking, consistent backups.
+# Runs on the internal backend network with direct access to l2j-database.
+
+services:
+  l2j-database-backup:
+    image: ${BACKUP_IMAGE:-fradelg/mysql-cron-backup:latest}
+    depends_on:
+      l2j-database:
+        condition: service_healthy
+    environment:
+      - MYSQL_HOST=l2j-database
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASS=${MARIADB_ROOT_PASSWORD:-root_password}
+      - CRON_TIME=${DB_BACKUP_CRON:-0 3 * * *}
+      - MAX_BACKUPS=${DB_BACKUP_MAX:-14}
+      - INIT_BACKUP=${DB_BACKUP_INIT:-0}
+      - GZIP_LEVEL=${DB_BACKUP_GZIP_LEVEL:-9}
+      - MYSQLDUMP_OPTS=--single-transaction --quick --skip-lock-tables --no-tablespaces
+    volumes:
+      - ./${DATA_DIR:-data}/backup:/backup:rw
+    restart: unless-stopped
+    networks:
+      - backend
