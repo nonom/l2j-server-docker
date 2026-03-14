@@ -1,4 +1,4 @@
-# Build example from sibling datapack repository.
+﻿# Build override that uses the L2J Server game and login Docker repositories.
 
 services:
   l2j-server-login:
