@@ -49,4 +49,3 @@ for key in $(env | sed -n 's/=.*//p' | grep '^L2JFILES_' || true); do
   seed_list "$value"
 done
 
-chmod -R a+rwX "$SEED_DEST" 2>/dev/null || true
