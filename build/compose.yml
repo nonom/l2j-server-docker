@@ -6,9 +6,11 @@ services:
       context: ../l2j-server-login-docker
       dockerfile: Dockerfile
     image: l2j-server-login:local
+    pull_policy: never
 
   l2j-server-game:
     build:
       context: ../l2j-server-game-docker
       dockerfile: Dockerfile
     image: l2j-server-game:local
+    pull_policy: never

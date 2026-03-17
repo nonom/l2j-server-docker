@@ -38,7 +38,7 @@ if /I "%cmd%"=="ps" (
   goto :eof
 )
 if /I "%cmd%"=="build" (
-  call :set_compose_build_files
+  call :set_compose_files
   docker compose !compose_files! build !args!
   goto :eof
 )
@@ -50,10 +50,9 @@ if /I "%cmd%"=="recreate" (
   goto :eof
 )
 if /I "%cmd%"=="rebuild" (
-  call :set_compose_build_files
+  call :set_compose_files
   docker compose !compose_files! build --no-cache !args!
   if errorlevel 1 goto :eof
-  call :set_compose_files
   docker compose !compose_files! up -d --force-recreate !args!
   goto :eof
 )
@@ -84,12 +83,3 @@ for /f "delims=" %%F in ('where /r server compose.yml 2^>nul ^| sort') do (
 )
 goto :eof
 
-:set_compose_build_files
-set "compose_files=-f docker-compose.yml"
-for /f "delims=" %%F in ('where /r server compose.yml 2^>nul ^| sort') do (
-  set "compose_files=!compose_files! -f ""%%~fF"""
-)
-for /f "delims=" %%F in ('where /r build compose.yml 2^>nul ^| sort') do (
-  set "compose_files=!compose_files! -f ""%%~fF"""
-)
-goto :eof

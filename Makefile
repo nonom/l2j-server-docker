@@ -1,7 +1,6 @@
 .PHONY: up down logs ps recreate build rebuild restart test
 
 compose := docker compose -f docker-compose.yml $(shell find server -type f -name compose.yml | sort | sed 's|^|-f |')
-compose_build := docker compose -f docker-compose.yml $(shell find server build -type f -name compose.yml | sort | sed 's|^|-f |')
 
 ## Start the containers in detached mode
 up:
@@ -25,11 +24,11 @@ recreate: down
 
 ## Build local images.
 build:
-	@$(compose_build) build
+	@$(compose) build
 
 ## Rebuild local images and recreate containers.
 rebuild:
-	@$(compose_build) build --no-cache
+	@$(compose) build --no-cache
 	@$(compose) up -d --force-recreate
 
 ## Restart all containers
