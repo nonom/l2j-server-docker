@@ -1,4 +1,4 @@
-# Logs configuration example for L2J game and login server.
+# Logs configuration for L2J game and login server.
 
 services:
   l2j-server-login:
