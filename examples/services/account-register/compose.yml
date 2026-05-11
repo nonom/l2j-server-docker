@@ -1,0 +1,24 @@
+# Lightweight PHP-FPM account registration service.
+# Creates login-server accounts in the L2J login database.
+# Pair with account-register/caddy for public HTTP/HTTPS access.
+
+services:
+  l2j-account-register:
+    build:
+      context: ./server/account-register
+      dockerfile: Dockerfile
+    image: ${PHP_IMAGE:-l2j-account-register:local}
+    depends_on:
+      l2j-database:
+        condition: service_healthy
+    environment:
+      - DB_HOST=l2j-database
+      - DB_NAME=${L2JLOGIN_DB_NAME:-l2jls}
+      - DB_USER=${L2JLOGIN_DB_USER:-l2jls}
+      - DB_PASS=${L2JLOGIN_DB_PASS:-l2jls_password}
+    volumes:
+      - ./server/account-register/index.php:/var/www/html/index.php:ro
+    networks:
+      - default
+      - backend
+    restart: unless-stopped

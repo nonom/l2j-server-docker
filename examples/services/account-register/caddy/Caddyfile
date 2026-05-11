@@ -1,0 +1,5 @@
+{$DOMAIN_REGISTER:register.localhost} {
+  root * /var/www/html
+  php_fastcgi l2j-account-register:9000
+  file_server
+}
