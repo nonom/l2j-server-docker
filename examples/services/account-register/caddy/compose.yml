@@ -1,0 +1,23 @@
+# Caddy reverse proxy for the account registration service.
+# Exposes the PHP-FPM register app on HTTP/HTTPS and can obtain Let's Encrypt certificates.
+# Use DOMAIN_REGISTER to set the public hostname.
+
+services:
+  caddy:
+    image: ${CADDY_IMAGE:-caddy:2-alpine}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./server/account-register/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./server/account-register/index.php:/var/www/html/index.php:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - DOMAIN_REGISTER=${DOMAIN_REGISTER:-register.localhost}
+    networks:
+      - default
+
+volumes:
+  caddy_data:
+  caddy_config:
